@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { Client, Util } = require('discord.js');
-const GOOGLE_API_KEY = 'GOOGLEAPIKEY';
+const GOOGLE_API_KEY = 'process.env.GOOGLE_API_KEY';
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const opus = require('opusscript');
