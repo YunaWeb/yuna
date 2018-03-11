@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const { Client, Util } = require('discord.js');
-const GOOGLE_API_KEY = 'process.env.GOOGLE_API_KEY';
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const opus = require('opusscript');
@@ -9,7 +8,7 @@ const prefix = "y!";
 const client = new Client({ disableEveryone: true});
 const bot = new Discord.Client()
 
-const youtube = new YouTube(GOOGLE_API_KEY);
+const youtube = new YouTube(process.env.GOOGLE_API_KEY);
 
 const queue = new Map();
 
