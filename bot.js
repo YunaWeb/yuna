@@ -3,6 +3,7 @@ const { Client, Util } = require('discord.js');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const opus = require('opusscript');
+const ffmpeg = require('ffmpeg');
 const prefix = "y!";
 
 const client = new Client({ disableEveryone: true});
