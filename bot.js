@@ -34,13 +34,6 @@ client.on('warn', console.warn);
 
 client.on('error', console.error);
 
-client.on('ready', () => {
-        var interval = setInterval (function () {
-        	client.login()
-            console.log("[Bot Log] I reconnected!")
-        }, 1 * 900000); 
-    });
-
 client.on('message', async message => { // eslint-disable-line
 	if (message.author.bot) return undefined;
 	if (!message.content.startsWith(prefix)) return undefined;
