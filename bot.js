@@ -5,8 +5,8 @@ const ytdl = require('ytdl-core');
 const opus = require('opusscript');
 const ffmpeg = require('ffmpeg');
 const prefix = "y!";
-const db = require('quick.db');
 const ms = require('parse-ms');
+const db = require('quick.db');
 
 const client = new Client({ disableEveryone: true});
 const bot = new Discord.Client()
