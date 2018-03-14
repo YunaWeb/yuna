@@ -5,6 +5,8 @@ const ytdl = require('ytdl-core');
 const opus = require('opusscript');
 const ffmpeg = require('ffmpeg');
 const prefix = "y!";
+const db = require('quick.db');
+const ms = require('parse-ms');
 
 const client = new Client({ disableEveryone: true});
 const bot = new Discord.Client()
@@ -187,8 +189,8 @@ let embed = new Discord.RichEmbed()
       message.channel.sendEmbed(embed);
 }
   
-	//say
-	if(command === `say`) {
+//say
+if(command === `say`) {
     const sayMessage = args.join(" ");
     // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
     message.delete().catch(O_o=>{}); 
@@ -197,6 +199,94 @@ let embed = new Discord.RichEmbed()
     
     console.log(`[Command Log] ${message.author.username} has used the say Command!`)
   }
+	
+//reverse
+if(command === 'reverse') {
+  if(args.length === 0) { // If the user just typed "!echo reverse", say "Invalid input"
+        return message.channel.send("Sorry but something went wrong!");
+    }
+    var text = args.join(" ");
+    text = text.split("").reverse().join("");
+    message.channel.send(`${text}`)
+}
+
+//vote
+if(command === 'vote') {
+  const sayMessage = args.join(" ");
+    message.delete().catch(O_o=>{}); 
+  let embed = new Discord.RichEmbed()
+      .setTitle('**VOTE:**')
+      .setDescription(`${sayMessage}`)
+      .setColor(Math.floor(Math.random() * 16777214) + 1,)
+      message.channel.sendEmbed(embed)
+            .then(function (message) {
+              message.react("👍")
+              message.react("👎")
+            }).catch(function() {
+             });
+}
+
+//id
+if(command === `id`) {
+  let member = message.mentions.members.first();
+    if(!member)
+      return message.reply("Please mention a valid member of this server");
+    let embed = new Discord.RichEmbed()
+      .setDescription(`The ID from **${member.user.tag}** is: **${member.user.id}**`)
+      .setColor(Math.floor(Math.random() * 16777214) + 1,)
+      message.channel.sendEmbed(embed);
+}
+
+//waifu
+    if(command === `waifu`) {
+        const randomnumber = Math.floor((Math.random() * 10) + 1);
+        if (randomnumber === 1)
+            message.channel.send("https://cdn.discordapp.com/attachments/419580009099821059/419589271939448852/waifushit.jpg").then(message.channel.send("Your waifu is shit.. **1/10** :cry:"));
+         else if (randomnumber === 2)
+            message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419594101961523200/nope.jpg").then(message.channel.send("Nope :("));
+         else if (randomnumber === 3)
+            message.channel.send("Your waifu is pretty shit **3/10** ");
+         else if (randomnumber === 4)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419591738177355777/waifuokay.jpg").then(message.channel.send("Your waifu is Okay! 4/10"));
+         else if (randomnumber === 5)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419592274268258330/average.jpg").then(message.channel.send("Average Waifu."));
+         else if (randomnumber === 6)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419592679920369674/notbad.jpg").then(message.channel.send("Hey, not bad! 6/10"));
+         else if (randomnumber === 7)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419591114006331402/images.jpg").then(message.channel.send("Nice waifu 7/10"));
+         else if (randomnumber === 8)
+          message.channel.send("https://cdn.discordapp.com/attachments/419580009099821059/419597244228960257/prettynice.jpg").then(message.channel.send("Pretty nice Waifu! :O"));
+         else if (randomnumber === 9)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419593532517646348/best.jpg").then(message.channel.send("Best waifu"));
+         else if (randomnumber === 10)
+          message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419593664013008916/error.jpg").then(message.channel.send("**ERROR** Waifu is rating off the scale"));
+    }
+
+if(command === `daily`) {
+    let cooldown = 8.64e+7;
+    let amount = 150;
+
+    let lastDaily = await db.fetch(`lastDaily_${message.author.id}`);
+
+    if(lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
+      let timeObj = ms(cooldown - (Date.now() - lastDaily));
+
+      message.channel.send(`You already collected this, please wait **${timeObj.hours}h ${timeObj.minutes}m**!`);
+    } else {
+      message.channel.send(`You have successfully received ${amount}`);
+
+      db.set(`lastDaily_${message.author.id}`, Date.now());
+      db.add(`userBalance_${message.author.id}`, 250);
+    }
+  }
+
+if(command === `balance`) {
+  let user = message.mentions.users.first() || message.author;
+  let balance = await db.fetch(`userBalance_${user.id}`);
+
+  if(balance === null) balance = 0;
+  message.channel.send(`${user.username} - Balance: ${balance}`);
+}
 
 //warn
 if(command === `warn`) {
