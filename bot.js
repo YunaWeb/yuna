@@ -5,8 +5,6 @@ const ytdl = require('ytdl-core');
 const opus = require('opusscript');
 const ffmpeg = require('ffmpeg');
 const prefix = "y!";
-const ms = require('parse-ms');
-const db = require('quick.db');
 
 const client = new Client({ disableEveryone: true});
 const bot = new Discord.Client()
@@ -261,32 +259,6 @@ if(command === `id`) {
          else if (randomnumber === 10)
           message.channel.send("https://cdn.discordapp.com/attachments/419418987273650176/419593664013008916/error.jpg").then(message.channel.send("**ERROR** Waifu is rating off the scale"));
     }
-
-if(command === `daily`) {
-    let cooldown = 8.64e+7;
-    let amount = 150;
-
-    let lastDaily = await db.fetch(`lastDaily_${message.author.id}`);
-
-    if(lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
-      let timeObj = ms(cooldown - (Date.now() - lastDaily));
-
-      message.channel.send(`You already collected this, please wait **${timeObj.hours}h ${timeObj.minutes}m**!`);
-    } else {
-      message.channel.send(`You have successfully received ${amount}`);
-
-      db.set(`lastDaily_${message.author.id}`, Date.now());
-      db.add(`userBalance_${message.author.id}`, 250);
-    }
-  }
-
-if(command === `balance`) {
-  let user = message.mentions.users.first() || message.author;
-  let balance = await db.fetch(`userBalance_${user.id}`);
-
-  if(balance === null) balance = 0;
-  message.channel.send(`${user.username} - Balance: ${balance}`);
-}
 
 //warn
 if(command === `warn`) {
