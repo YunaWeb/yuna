@@ -167,7 +167,7 @@ const sayMessage = args.join(" ");
 if(command === `shutdown`) {
   if(message.author.id === "398167269764759583") {
     let embed = new Discord.RichEmbed()
-      .setDescription(`**Yuna-Bot 1.8 is shutting down...**`)
+      .setDescription(`**Yuna-Bot is shutting down...**`)
       .setColor(Math.floor(Math.random() * 16777214) + 1,)
       message.channel.sendEmbed(embed);
     client.destroy();
@@ -179,7 +179,7 @@ if(command === `shutdown`) {
 }
 
 //membercount
-if(command === `membercount`) {
+if(command === `members`) {
 let embed = new Discord.RichEmbed()
       .setDescription(`There are currently **${message.guild.memberCount}** Members in this Server!`)
       .setColor(Math.floor(Math.random() * 16777214) + 1,)
@@ -190,9 +190,7 @@ let embed = new Discord.RichEmbed()
 //say
 if(command === `say`) {
     const sayMessage = args.join(" ");
-    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
     message.delete().catch(O_o=>{}); 
-    // And we get the bot to say the thing: 
     message.channel.send(sayMessage);
     
     console.log(`[Command Log] ${message.author.username} has used the say Command!`)
@@ -200,7 +198,7 @@ if(command === `say`) {
 	
 //reverse
 if(command === 'reverse') {
-  if(args.length === 0) { // If the user just typed "!echo reverse", say "Invalid input"
+  if(args.length === 0) {
         return message.channel.send("Sorry but something went wrong!");
     }
     var text = args.join(" ");
@@ -405,7 +403,7 @@ if(command === `kick`) {
       .setColor(Math.floor(Math.random() * 16777214) + 1,)
       .addField("***Kicked by:***", message.author.username)
       .addField("***Because:***", `${reason}`)
-      .setFooter(`User kicked by Yuna Bot 1.8`);
+      .setFooter(`User kicked by Yuna`);
 
       message.channel.sendEmbed(embed);
   
@@ -425,7 +423,7 @@ if(command === `invite`) {
 if(command === `about`) {
 message.channel.send({embed: {
     color: 3447003,
-    title: "**Yuna Bot 1.8**",
+    title: "**Yuna**",
     description: "***A Bot to have fun with!***",
     fields: [{
         name: "Why Yuna ?",
@@ -472,7 +470,7 @@ if(command === `ban`) {
       .setColor(Math.floor(Math.random() * 16777214) + 1,)
       .addField("***Banned by:***", message.author.username)
       .addField("***Because:***", `${reason}`)
-      .setFooter(`User banned by Yuna Bot 1.8`);
+      .setFooter(`User banned by Yuna`);
 
       message.channel.sendEmbed(embed);
   
@@ -491,7 +489,7 @@ if(command === `unban`) {
       .setDescription(`**${user} has been successfully unbanned!**`)
       .setColor(Math.floor(Math.random() * 16777214) + 1,)
       .addField("***Unbanned by:***", message.author.username)
-      .setFooter(`User unbanned by Yuna Bot 1.8`);
+      .setFooter(`User unbanned by Yuna`);
       
 
       message.channel.sendEmbed(embed);
@@ -549,41 +547,49 @@ if(command === `embed`) {
 
 //help
 if(command === `help`) {
-message.channel.send({embed: {
-    color: Math.floor(Math.random() * 16777214) + 1,
-    title: "**Yuna 1.8 Command-List**",
-    description: "***There you have all commands from Yuna:***",
-    fields: [{
-        name: "***Moderation:***",
-        value: ">ban <user> Bans a member from the Server!\n>unban <id> Unbans a User from the Server\n>kick <user> Kicks a member from the Server!\n>mute <user> Mutes a User!\n>unmute <user> Unmutes a muted User!\n>clearall Clears the whole Channel!\n>clear <amount> Clears a amount of messages!\n>warn <message> Creates a warning message!"
-      },
-      {
-        name: "Info:",
-        value: ">help Creates this Embed!\n>invite Creates an invite link for me!\n>userinfo <user> Shows some infos about an User!\n>serverinfo Shows some infos about the current Server!\n>avatar <user> Shows the avatar from an User!\n>about Shows some infos about the bot!\n>ping Checks if the Bot is Online and shows the ping!\n>shorten <URL> Shorten a URL!\n>membercount Shows how many Users are in the Server!"
-      },
-      {
-        name: "Fun:",
-        value: ">clapify <text> Clapify's something!\n>bigtext <text> Makes a Word/Sentence bigger!\n>door <text> Sends something out the door!\n>embed <text> Creates a little embed!\n>8ball <question> Find the answer for your Question!\n>roast <user> Roast someone!\n>img Sends a random image!\n>gif Sends a random gif!\n>cookie <user> Give someone a cookie!\n>coinflip Flip a coin!"
-      },
-      {
-        name: "Music:",
-        value: "n!play Plays a Song from YouTube!\nn!skip Skips the current Song!\nn!stop Stops the current Song/Queue!\nn!volume Sets the Volume!\nn!playing Shows the current Song!\nn!queue Shows the Queue!\nn!pause Pauses the current Song!\nn!resume Resumes the paused Song!"
-      },
-      {
-        name: "Currency:",
-        value: ">Yunas <user> <amount> Gives a member some Yunas..No you cant do anything with them :joy:"
-      }
-    ],
-    timestamp: new Date(),
-    footer: {
-    icon_url: client.user.avatarURL,
-      text: `About Yuna Bot requested by ${message.author.username}`
-    }
-  }
-});
-  
-  console.log(`[Command Log] ${message.author.username} has used the help Command!`)
-}
+  let pages = ['You can view all commands if you swipe!\n**Hint: You can use the Emojis to swipe!**', 'y!ban : Bans the mentioned User from the Server\ny!unban : Unbans the specified User from the Server\ny!kick : Kicks the mentioned User from the Server\ny!mute : Mutes the mentioned User\ny!unmute : Unmutes the mentioned User\ny!clearall : Clears the whole Channel\ny!clear : Deletes a amount of Messages\ny!warn : Sends a warning to someone\ny!softban : Bans and Unbans the mentioned User from the Server', 'y!help : Shows all commands from Yuna\ny!invite : Creates a invite link for Yuna\ny!userinfo : Shows some infos about the mentioned User\ny!serverinfo : Shows some infos about the Server\ny!about : Shows some infos about the Bot\ny!ping : Pong! Shows the latency\ny!shorten : Shorten a link\ny!members : Shows how many Members in the Server are\ny!id : Shows the ID from someone\ny!vote : Vote something', 'y!say : Make the Bot say something\ny!reverse : Reverse a text\ny!clapify : Clapify a text\ny!bigtext : Make the text BIGGER\ny!door : Send something out the door\ny!embed : Creates an embed\ny!8ball : Ask the 8Ball a Question\ny!roast : Roast someone\ny!img : Sends a random Picture\ny!gif : Sends a random gif\ny!cookie : Give someone a cookie\ny!coinflip : Flip a coin\ny!waifu : Rate your Waifu', 'y!play : Plays a Song from YouTube\ny!skip : Skips the current Song\ny!stop : Stops the current Song/Queue\ny!volume : Sets the Volume\ny!playing : Shows what is currently played\ny!queue : Shows the Queue\ny!pause : Pauses the current Song\ny!resume : Resumes the paused Song', 'y!yunas : Give someone some yunas\ny!daily : Get your Daily Reward\ny!balance : Shows how much money someone has'];
+  let titles = ['Commands from Yuna', 'Moderation:', 'Information:', 'Fun:', 'Music:', 'Currency:']
+
+  let page = 1;
+ 
+  const embed = new Discord.RichEmbed()
+    .setColor(0xffffff)
+    .setFooter(`Page ${page} of ${pages.length}`)
+    .setDescription(pages[page-1])
+    .setTitle(titles[page-1])
+ 
+  message.channel.send(embed).then(msg => { 
+    msg.react('⏪').then( r => {
+      msg.react('⏩')
+     
+      const backwardsFilter = (reaction, user) => reaction.emoji.name === '⏪' && user.id === message.author.id;
+      const forwardsFilter = (reaction, user) => reaction.emoji.name === '⏩' && user.id === message.author.id;
+     
+      const backwards = msg.createReactionCollector(backwardsFilter, { time: 60000 });
+      const forwards = msg.createReactionCollector(forwardsFilter, { time: 60000 });
+     
+      backwards.on('collect', r => {
+        if (page === 1) return;
+        page--;
+        embed.setDescription(pages[page-1]);
+        embed.setTitle(titles[page-1]);
+        embed.setFooter(`Page ${page} of ${pages.length}`);
+        msg.edit(embed)
+      })
+     
+      forwards.on('collect', r => {
+        if (page === pages.length) return;
+        page++;
+        embed.setDescription(pages[page-1]);
+        embed.setTitle(titles[page-1]);
+        embed.setFooter(`Page ${page} of ${pages.length}`);
+        msg.edit(embed)
+      })
+   
+    })
+ 
+  })
+ }
 
 //8ball
 function doMagic8BallVoodoo() {
@@ -634,7 +640,6 @@ if(command === `yunas`) {
   let member = message.mentions.members.first();
     if(!member)
       return message.reply("Please mention a valid member of this server");
-   // slice(1) removes the first part, which here should be the user mention!
     let neps = args.slice(1).join(' ');
     if(!neps)
       return message.reply("Please type in the amount of neps!");
@@ -707,8 +712,8 @@ if(command === `img`) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
 			for (const video of Object.values(videos)) {
-				const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-				await handleVideo(video2, message, voiceChannel, true); // eslint-disable-line no-await-in-loop
+				const video2 = await youtube.getVideoByID(video.id);
+				await handleVideo(video2, message, voiceChannel, true);
 			}
 			return message.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`);
 		} else {
@@ -723,7 +728,7 @@ __**Song selection:**__
 ${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}
 Please provide a value to select one of the search results ranging from 1-10.
 					`);
-					// eslint-disable-next-line max-depth
+					
 					try {
 						var response = await message.channel.awaitMessages(message2 => message2.content > 0 && message2.content < 11, {
 							maxMatches: 1,
@@ -763,9 +768,9 @@ Please provide a value to select one of the search results ranging from 1-10.
 		return message.channel.send(`I set the volume to: **${args[1]}**`);
 	} else if (command === 'playing') {
 		if (!serverQueue) return message.channel.send('There is nothing playing.');
-		return message.channel.send(`🎶 Now playing: **${serverQueue.songs[0].title}**`);
+		return message.channel.send(`🎶 Now playing: **${serverQueue.songs[0].title}** 🎶`);
 	} else if (command === 'queue') {
-		if (!serverQueue) return message.channel.send('There is nothing playing.');
+		if (!serverQueue) return message.channel.send('There is nothing playing :cry:');
 		return message.channel.send(`
 __**Song queue:**__
 ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
@@ -775,16 +780,16 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
-			return message.channel.send('⏸ Paused the music for you!');
+			return message.channel.send('⏸ Paused the music! ⏸');
 		}
-		return message.channel.send('There is nothing playing.');
+		return message.channel.send('There is nothing playing :cry:');
 	} else if (command === 'resume') {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
-			return message.channel.send('▶ Resumed the music for you!');
+			return message.channel.send('▶ Resumed the music! ▶');
 		}
-		return message.channel.send('There is nothing playing.');
+		return message.channel.send('There is nothing playing :cry:');
 	}
 
 	return undefined;
@@ -818,13 +823,13 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		} catch (error) {
 			console.error(`I could not join the voice channel: ${error}`);
 			queue.delete(message.guild.id);
-			return message.channel.send(`I could not join the voice channel: ${error}`);
+			return message.channel.send(`Sorry but I could not join the voice channel:\n**Error: ${error}**`);
 		}
 	} else {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return undefined;
-		else return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
+		else return message.channel.send(`✅ **${song.title}** has been added to the queue! :smile:`);
 	}
 	return undefined;
 }
@@ -849,7 +854,7 @@ function play(guild, song) {
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-	serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`);
+	serverQueue.textChannel.send(`🎶 Started playing: **${song.title}** 🎶`);
 }
 
 client.login(process.env.TOKEN);
